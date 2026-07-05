@@ -1,0 +1,309 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Mad spild</title>
+    <link rel="stylesheet" href="/stylesheet.css">
+    <style>
+        canvas {
+            width: 700px;
+            height: 20px;
+            margin-bottom: 30px;
+        }
+
+    </style>
+
+</head>
+<body>
+<h1 id="overskriften">Madsplid i Salling group butikker i 8000 Aarhus c</h1>
+<div class="undersider">
+    <ul id="navigation">
+        <li>
+            <a href="/">Forside</a>
+        </li>
+        <li>
+            <a href="/Tekniskinfrastruktur">Teknisk infrastruktur</a>
+        </li>
+        <li>
+            <a href="/Sammenligning">Sammenligning og konklusion</a>
+        </li>
+    </ul>
+
+</div>
+<br>
+<br>
+<div class="intro">
+    <div class="text">
+        <h2 id="formåloverskrift">Projekts formål</h2>
+        <p>Formålet er via en webapplikation, at undersøge, hvordan prisnedsættelser – antaget at det skyldes korte udløbsdatoer – påvirker varekategorier i supermarkeder i 8000 Aarhus C. Salling Groups API-data analyseres mhp. at optimere indkøb og mindske madspild og tab. Derudover sammenlignes madspild på tværs af lande via en ekstern API. Målet er at identificere de varekategorier, der oftest nedsættes, og hvad det siger om deres salg og omsætning. Undersøgelsesspørgsmålet lyder:
+        </p>
+        <p id="kursiv">Hvilke varekategorier i Salling Group supermarkeder i Aarhus C oplever de største prisnedsættelser, og hvad kan det indikere om varernes salg og omsætning?</p>
+        <h3>Dataen indsamlet og bearbejdet</h3>
+        <h4>Indsamlet</h4>
+        <p>API´en fra Salling Group er en REST-API. Dataen fra Salling Groups API er hentet ned ved hjælp af et Node.js-script. Jeg bruger en asynkron funktion, der sender et HTTP GET-request til API´ens endpoint via fetch-funktionen. For at tilgå API´en har jeg fået en personlig API key, som fungerer som en Bearer-token. Dataen bliver sendt i et JSON-format, som jeg herefter parser til et javaScript-objekt. Dataen konverteres igen til en formateret JSON-streng, ved hjælp af JSON.stringify. Til sidst gemmer jeg JSON-strengen ved brug af fs.writeFileSync-funktionen. Nu har jeg en JSON-fil der hedder madspild8000.json. </p>
+        <br>
+        <p>Dataerne fra Food Waste" API´en blev downloadet ned som en CSV-fil. For at behandle filen, får jeg også hjælp af et Node.js-script, som benytter biblioteket papaparse til at parse CSV-indholdet og fs til filhåndtering. Først indlæser jeg filen som tekst ved hjælp af fs.readFileSync, hvor jeg herefter bruger papaparse.parse til at konventer filen til et java-script objekt, hvor data-nøglen indeholder et array af objekter. Det færdigbehandlede data-sæt bliver herefter omdannet til en ny JSON-fil med fs.writeFileSync, hvor JSON-strengen bliver formateret ved hjælp af JSON.stringify. </p>
+        <br>
+        <h4>Bearbejdet</h4>
+        <p>Til bearbejdning af min gennemsnitligrabatperproduktkategori.mjs-fil indlæses JSON-data med fs.readFileSync og konverteres via JSON.parse. Produkterne filteres efter udvalgte kategorier som "Mejeri og køl" og "Kød og fisk". For hver kategori opretter jeg et objekt, som tæller antallet af varer og summerer deres rabatter ved hjælp af forEach() og rabatten beregnes via item.offer.percentDiscount. Herefter beregner jeg den gennemsnitlige rabat pr. kategori, afrunder med toFixed(2) og gemmer resultatet i en ny JSON-fil, som bruges til den første graf.
+            Til de andre grafer arbejder jeg med data fra madspild8000.json. Her fokuserer jeg på to hovedkategorier "Mejeri og køl" og "Kød og fisk". I den sidste graf undersøger jeg nærmere, hvilke færdigretter der oftest sættes ned. Koden læser JSON-filen, opretter et array med specifikke underkategorier og tæller antallet af varer i hver ved hjælp af forEach() og filter(). Produkternes kategorier deles op med split(">") for at matche underkategorierne, og tællerne gemmes til sidst i separate JSON-filer.
+        </p>
+        <br>
+        <p>For at bearbejde dataen fra filteretlande.json opretter jeg en liste af array med de lande som jeg ønsker at fokusere på. Så bruger jeg filter på mit data fra JSON-filen, til kun at kigge på de lande jeg har defineret i arrayet. Derefter bliver det filtrerede array ændret med Array.map(), hvor jeg tager de felter, jeg skal bruge, og samtidig laver tekst til tal med Num-ber(). Til sidst bliver resultatet lavet om til JSON med JSON.stringify() og gemt som en fil på computeren med fs.writeFileSync(). Den nye JSON-fil som hedder filteretlande.json, bruger jeg til at filtrere endnu mere på. Jeg bruger Array.map() til at gå igennem hvert objekt i arrayet og hente nogle bestemte felter: 'Country', 'Household estimate', 'Retail estimate' og 'Food service estimate'. Det nye array med de valgte data bliver derefter omdannet til en pæn formateret JSON-streng med JSON.stringify(). Til sidst gemmer jeg denne JSON-streng i en ny fil ('specifikfilteretlande.json') med fs.writeFileSync(). Denne JSON-fil bruger jeg til grafen på sammenligningssiden.</p>
+
+    </div>
+    <div class="billeder">
+        <img src="/images/sallinggroup.png" height="600" width="400">
+    </div>
+</div>
+
+<br>
+<br>
+<br>
+<br>
+
+<div class="gennemsnit">
+    <div class="text">
+        <h2 id="formåloverskrift">Gennemsnit i procent</h2>
+        <p>Grafen viser den gennemsnitlige rabat i fire varekategorier. "Mejeri og køl" og "kød og fisk" har de højeste gennemsnitlige prisnedsættelser – omkring 40 %. </p>
+    </div>
+    <div class="graf">
+        <canvas id="gennemsnitChart"></canvas>
+    </div>
+
+</div>
+
+<br>
+<br>
+<br>
+<br>
+
+<div class="varekategori">
+    <div class="text">
+        <h2 id="formåloverskrift">Varekategori</h2>
+        <p>Grafen viser, hvilke underkategorier i "mejeri og køl" samt "kød og fisk" der ofte nedsættes, det er især færdigretter, lammekød og koteletter.</p>
+    </div>
+    <div class="graf">
+        <button id="knapmejeri">Mejeri og køl</button>
+        <button id="knapkød">Kød og fisk</button>
+
+        <canvas id="underkategoriChart"></canvas>
+    </div>
+</div>
+
+    <br>
+    <br>
+    <br>
+    <br>
+
+
+<div class="færdigretvariant">
+    <div class="text">
+        <h2 id="formåloverskrift">Færdigret varianter</h2>
+        <p>Grafen viser hvilke færdigretter i køledisken, som er blandt de mest nedsatte varer. Det er særligt færdiglavede middagsretter, der skiller sig ud.</p>
+    </div>
+    <div class="graf">
+        <canvas id="faerdigretChart"></canvas>
+    </div>
+</div>
+
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+
+    const gennemsnitCanvas = document.getElementById('gennemsnitChart');
+    const categoryGennemsnitData = <%- JSON.stringify(categoryGennemsnit)%>;
+
+    const labels = Object.keys(categoryGennemsnitData); //Dette trækker alle nøglerne (dvs. "Mejeri", "Kød", "Brød", "Grønt") ud i et array:
+    const dataValues = Object.values(categoryGennemsnitData); // Dette trækker alle værdierne (dvs. tallene: 12.3, 9.1, 7.8, 5.4) ud i et array:
+
+    new Chart(gennemsnitCanvas,{
+        type: 'bar',
+        data:{
+            labels: labels,
+            datasets: [
+                {
+                    label: 'Gennemsnitlig rabat (%)',
+                    data: dataValues,
+                    backgroundColor: [
+                        'rgba(255, 99, 132, 0.2)',
+                        'rgba(54, 162, 235, 0.2)',
+                        'rgba(255, 206, 86, 0.2)',
+                        'rgba(75, 192, 192, 0.2)'
+                    ],
+                    borderColor: [
+                        'rgb(255, 99, 132)',
+                        'rgb(54, 162, 235)',
+                        'rgb(255, 206, 86)',
+                        'rgb(75, 192, 192)'
+                    ],
+                    borderWidth: 1
+                }
+            ]
+        },
+        options: {
+            plugins: {
+                legend: {
+                    onclick: null
+                }
+            },
+
+            scales: {
+                y:{
+                    title: {
+                        display: true,
+                        text: 'Rabat i procent'
+                    }
+                },
+                x: {
+                    title: {
+                        display : true,
+                        text: 'Produktkategori'
+                    }
+                }
+            }
+        }
+    });
+
+
+
+
+    const underkategoriCanvas = document.getElementById('underkategoriChart');
+   let underkategoriChart = '';
+
+   async function hentOgVisData(datasetNavn){ // Sender en POST-anmodning til '/' (dvs. forsiden af din Express-server).
+       const response = await fetch('/', { // Headeren: Fortæller at det er JSON-data.
+           method: 'POST',
+           headers:{
+               'Content-Type': 'application/json'
+           },
+           body: JSON.stringify({dataset: datasetNavn}) // Body: Sender { dataset: datasetNavn } som JSON.
+       });
+       // Dette kalder typisk en app.post('/', ...)-rute i din backend, som returnerer data til grafen.
+
+       let data = await response.json(); // Afventer svaret fra serveren og konverterer det fra JSON til JavaScript-objekt.
+
+       const labels = Object.keys(data);
+       const values = Object.values(data);
+
+       if (underkategoriChart){ //Når man bruger fx Chart.js og skifter data (som i din hentOgVisData()-funktion), er det god praksis at slette den gamle graf først, inden man tegner en ny.Ellers risikerer man at få flere grafer oven i hinanden, hvilket kan forvrænge udseendet eller give fejl.
+           underkategoriChart.destroy();
+       }
+
+       underkategoriChart = new Chart(underkategoriCanvas,{
+        type: 'bar',
+        data:{
+            labels: labels,
+            datasets: [
+                {
+                    label: `Antal produkter prisnedsat i ${datasetNavn}`,
+                    data: values,
+                    backgroundColor: [
+                        'rgba(255, 99, 132, 0.2)',
+                        'rgba(54, 162, 235, 0.2)',
+                        'rgba(255, 206, 86, 0.2)',
+                        'rgba(75, 192, 192, 0.2)',
+                        'rgba(153, 102, 255, 0.2)',
+                        'rgba(255, 159, 64, 0.2)',
+                        'rgba(199, 199, 199, 0.2)',
+                        'rgba(83, 102, 255, 0.2)',
+                        'rgba(255, 102, 255, 0.2)',
+                        'rgba(102, 255, 204, 0.2)',
+                        'rgba(255, 204, 102, 0.2)',
+                        'rgba(102, 153, 255, 0.2)',
+                        'rgba(255, 153, 204, 0.2)',
+                        'rgba(204, 255, 153, 0.2)',
+                        'rgba(153, 204, 255, 0.2)',
+                        'rgba(255, 153, 102, 0.2)'
+                    ],
+                    borderColor: [
+                        'rgb(255, 99, 132)',
+                        'rgb(54, 162, 235)',
+                        'rgb(255, 206, 86)',
+                        'rgb(75, 192, 192)',
+                        'rgb(153, 102, 255)',
+                        'rgb(255, 159, 64)',
+                        'rgb(199, 199, 199)',
+                        'rgb(83, 102, 255)',
+                        'rgb(255, 102, 255)',
+                        'rgb(102, 255, 204)',
+                        'rgb(255, 204, 102)',
+                        'rgb(102, 153, 255)',
+                        'rgb(255, 153, 204)',
+                        'rgb(204, 255, 153)',
+                        'rgb(153, 204, 255)',
+                        'rgb(255, 153, 102)'
+                    ],
+                    borderWidth: 1
+                }
+            ]
+        },
+        options: {
+            plugins: {
+                legend: {
+                    onclick: null
+                }
+            },
+
+            scales: {
+                y:{
+                    title: {
+                        display: true,
+                        text: 'Antal varer'
+                    }
+                },
+                x: {
+                    title: {
+                        display : true,
+                        text: 'UnderKategori'
+                    }
+                }
+            }
+        }
+    });
+   }
+
+   const mejeriKnap = document.getElementById('knapmejeri');
+   const kodKnap = document.getElementById('knapkød');
+
+   mejeriKnap.addEventListener('click', function (){
+       hentOgVisData('Mejeri og køl')
+   });
+
+   kodKnap.addEventListener('click', function (){
+       hentOgVisData('Kød og fisk')
+   });
+    hentOgVisData('Mejeri og køl');
+
+
+    const faerdigretCanvas = document.getElementById('faerdigretChart');
+   const faerdigretVariantData = <%- JSON.stringify(faerdigretVariant)%>
+
+    const variant = Object.keys(faerdigretVariantData);
+    const variantDataValues = Object.values(faerdigretVariantData);
+
+    new Chart(faerdigretCanvas, {
+        type: 'doughnut',
+        data: {
+            labels: variant,
+            datasets: [
+                {
+                    label: 'Produktvarianter prisnedsat i underkategorien Færdigretter',
+                    data: variantDataValues,
+                    backgroundColor: [
+                        'rgba(255, 99, 132, 0.2)',
+                        'rgba(54, 162, 235, 0.2)',
+                        'rgba(255, 159, 64, 0.2)',
+                        'rgba(75, 192, 192, 0.2)',
+                        'rgba(255, 223, 186, 0.2)'
+                    ],
+                    hoverOffset: 4
+                }]
+        },
+    });
+
+
+
+</script>
+</body>
