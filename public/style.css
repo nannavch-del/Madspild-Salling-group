@@ -1,0 +1,93 @@
+
+#overskriften {
+    font-family: "Baskerville Old Face",sans-serif;
+    font-size: 35pt;
+    color: lightseagreen;
+    letter-spacing: 1px;
+    text-align: center;
+}
+
+#navigation {
+    list-style-type: none;
+    display: flex;
+    justify-items: flex-start;
+    gap: 20px;
+    max-width: fit-content;
+    margin: auto;
+    font-size: 20pt;
+}
+#navigation a {
+    color: black;
+    text-decoration: none;
+}
+#navigation .active a {
+    font-weight: bold;
+    color: crimson;
+}
+
+#navigation a:hover {
+    text-decoration: underline;
+}
+
+.intro{
+    display: flex;
+}
+.billeder{
+    flex: 1;
+    padding: 10px;
+    display: flex;
+    justify-content: center; /* Centrer horisontalt */
+    align-items: flex-start;
+}
+.text{
+    flex: 1;
+    padding: 10px;
+    border: 3px solid #ccc;
+    border-radius: 15px;
+}
+#formåloverskrift{
+    text-align: center
+}
+
+
+.gennemsnit{
+    display: flex;
+}
+.text{
+    flex: 1;
+    padding: 10px;
+    border: 3px solid #ccc;
+    border-radius: 15px;
+}
+.graf{
+    flex: 2; /* 2 dele plads – dvs. dobbelt så bred som .text */
+    padding: 10px;
+}
+.varekategori{
+    display: flex;
+}
+.færdigretvariant{
+    display: flex;
+}
+
+#faerdigretChart {
+    max-width: 550px;
+    max-height: 550px;
+    margin: auto;
+    display: flex;
+}
+
+#årligmadspildp{
+    text-align: center;
+
+}
+#andenoverskrift{
+    text-align: center
+}
+
+.tektext{
+    text-align: center
+}
+#kursiv{
+    font-style: italic;
+}
