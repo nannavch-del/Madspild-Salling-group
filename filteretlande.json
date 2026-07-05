@@ -1,0 +1,58 @@
+[
+  {
+    "Country": "Denmark",
+    "combined figures": 132,
+    "Household estimate": 81,
+    "Household tonnes": 469449,
+    "Retail estimate": 30,
+    "Retail tonnes": 172003,
+    "Food service estimate": 21,
+    "Food service tonnes": 119134,
+    "Confidence": "High Confidence",
+    "Code": 208,
+    "Region": "Northern Europe",
+    "Source": "https://www.unep.org/resources/report/unep-food-waste-index-report-2119"
+  },
+  {
+    "Country": "Germany",
+    "combined figures": 102,
+    "Household estimate": 75,
+    "Household tonnes": 6263775,
+    "Retail estimate": 6,
+    "Retail tonnes": 498244,
+    "Food service estimate": 21,
+    "Food service tonnes": 1718433,
+    "Confidence": "High Confidence",
+    "Code": 276,
+    "Region": "Western Europe",
+    "Source": "https://www.unep.org/resources/report/unep-food-waste-index-report-2248"
+  },
+  {
+    "Country": "Norway",
+    "combined figures": 98,
+    "Household estimate": 79,
+    "Household tonnes": 423857,
+    "Retail estimate": 14,
+    "Retail tonnes": 74088,
+    "Food service estimate": 5,
+    "Food service tonnes": 26685,
+    "Confidence": "Medium Confidence",
+    "Code": 578,
+    "Region": "Northern Europe",
+    "Source": "https://www.unep.org/resources/report/unep-food-waste-index-report-2128"
+  },
+  {
+    "Country": "Sweden",
+    "combined figures": 112,
+    "Household estimate": 81,
+    "Household tonnes": 812948,
+    "Retail estimate": 10,
+    "Retail tonnes": 100364,
+    "Food service estimate": 21,
+    "Food service tonnes": 205746,
+    "Confidence": "High Confidence",
+    "Code": 752,
+    "Region": "Northern Europe",
+    "Source": "https://www.unep.org/resources/report/unep-food-waste-index-report-2129"
+  }
+]

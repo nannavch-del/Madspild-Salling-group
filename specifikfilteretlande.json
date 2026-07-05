@@ -1,0 +1,26 @@
+[
+  {
+    "Country": "Denmark",
+    "Household estimate": 81,
+    "Retail estimate": 30,
+    "Food service estimate": 21
+  },
+  {
+    "Country": "Germany",
+    "Household estimate": 75,
+    "Retail estimate": 6,
+    "Food service estimate": 21
+  },
+  {
+    "Country": "Norway",
+    "Household estimate": 79,
+    "Retail estimate": 14,
+    "Food service estimate": 5
+  },
+  {
+    "Country": "Sweden",
+    "Household estimate": 81,
+    "Retail estimate": 10,
+    "Food service estimate": 21
+  }
+]
