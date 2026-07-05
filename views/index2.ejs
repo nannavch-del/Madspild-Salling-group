@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Mad spild</title>
+    <link rel="stylesheet" href="/stylesheet.css">
+    <style>
+        canvas {
+            width: 700px;
+            height: 20px;
+            margin-bottom: 30px;
+        }
+
+    </style>
+
+</head>
+<body>
+
+<div>
+    <h1 id="overskriften">Årlig madspild i Danmark og nabolande</h1>
+    <div class="undersider">
+        <ul id="navigation">
+            <li>
+                <a href="/">Forside</a>
+            </li>
+            <li>
+                <a href="/Tekniskinfrastruktur">Teknisk infrastruktur</a>
+            </li>
+            <li>
+                <a href="/Sammenligning">Sammenligning og konklusion</a>
+            </li>
+        </ul>
+
+    </div>
+
+</div>
+
+<br>
+<br>
+<br>
+<br>
+
+<div>
+    <p id="årligmadspildp">Sammenligningen viser, at Danmark har det højeste madspild i retail-sektoren med cirka 30 kg pr. person pr. år. Til sammenligning ligger Norge på kun 14 kg – altså mere end 50 % lavere end Danmark. </p>
+
+</div>
+
+<br>
+<br>
+<br>
+<br>
+
+<div>
+    <canvas id="madspildperspektiverChart"></canvas>
+</div>
+<br>
+<h4>Konklusion</h4>
+<p>Graferne viser, at Mejeri/køl og kød/fisk har flest og størst prisnedsættelser – ofte ca. 40 %. Det gælder især færdigretter og bestemte kødtyper som lammekød og koteletter, hvilket peger på udfordringer med at få solgt disse varer inden udløb. Danmark skiller sig desuden negativt ud med højt madspild i "Retail estimate"" sammenlignet med nabolande. Derfor kan supermarkeder med fordel justere indkøb og lagerstyring for at mindske spild og økonomiske tab – og dermed spille en central rolle i en mere bæredygtig detailhandel og have indflydelse på det danske madspild.</p>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+    const specifikFilteretLandeCanvas = document.getElementById('madspildperspektiverChart');
+    const specifikFilteretLandeData = <%- JSON.stringify(specifikFilteretLande)%>;
+
+    new Chart(specifikFilteretLandeCanvas,{
+        type: 'line',
+        data:{
+            labels:['Household estimate', 'Retail estimate', 'Food service estimate'],
+            datasets:[
+                {
+                    label: specifikFilteretLandeData[0].Country,
+                    data: [
+                        specifikFilteretLandeData[0]["Household estimate"],
+                        specifikFilteretLandeData[0]["Retail estimate"],
+                        specifikFilteretLandeData[0]["Food service estimate"],
+                    ],
+                    borderColor: 'rgba(255,99,132,1)'
+                },
+                {
+                    label: specifikFilteretLandeData[1].Country,
+                    data: [
+                        specifikFilteretLandeData[1]["Household estimate"],
+                        specifikFilteretLandeData[1]["Retail estimate"],
+                        specifikFilteretLandeData[1]["Food service estimate"],
+                    ],
+                    borderColor: 'rgba(54,162,235,1)'
+                },
+                {
+                    label: specifikFilteretLandeData[2].Country,
+                    data: [
+                        specifikFilteretLandeData[2]["Household estimate"],
+                        specifikFilteretLandeData[2]["Retail estimate"],
+                        specifikFilteretLandeData[2]["Food service estimate"],
+                    ],
+                    borderColor: 'rgba(255,206,86,1)'
+                },
+                {
+                    label: specifikFilteretLandeData[3].Country,
+                    data: [
+                        specifikFilteretLandeData[3]["Household estimate"],
+                        specifikFilteretLandeData[3]["Retail estimate"],
+                        specifikFilteretLandeData[3]["Food service estimate"],
+                    ],
+                    borderColor: 'rgba(75,192,192,1)',
+                }
+            ]
+        },
+        options:{
+            scales:{
+                y:{
+                    title:{
+                        display: true,
+                        text:'kg pr. person pr.år'
+                    },
+                    beginAtZero: true
+                },
+                x:{
+                    title:{
+                        display: true,
+                        text: 'Land'
+                    }
+                }
+            }
+        }
+    });
+
+
+</script>
+</body>

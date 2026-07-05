@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Mad spild</title>
+    <link rel="stylesheet" href="/stylesheet.css">
+    <style>
+        canvas {
+            width: 700px;
+            height: 20px;
+            margin-bottom: 30px;
+        }
+
+    </style>
+</head>
+<body>
+<h1 id="overskriften">Teknisk Infrastruktur</h1>
+<div class="undersider">
+    <ul id="navigation">
+        <li>
+            <a href="/">Forside</a>
+        </li>
+        <li>
+            <a href="/Tekniskinfrastruktur">Teknisk infrastruktur</a>
+        </li>
+        <li>
+            <a href="/Sammenligning">Sammenligning og konklusion</a>
+        </li>
+    </ul>
+</div>
+
+<br>
+<br>
+<br>
+<br>
+
+
+<div class="gennemsnit">
+    <div class="text">
+        <p>  Min webapplikation er bygget i Node.js med Express som backend. Frontend består af EJS til at generere HTML, JavaScript til interaktivivitet, CSS til styling og Chart.js til at visuali-sere data på en overskuelig og pæn måde.
+            JSON-filerne, bruger jeg til at gemme både den rå, ufiltrerede data og den data, der er blevet behandlet og filtreret. Data kommer fra to API’er, som jeg henter og gemmer lokalt i JSON-filer. Det gør, at jeg kan arbejde videre med data uden at hente det gentagne gange.
+            Selve webapplikationen styres af en server.js-fil, som håndterer dataoverførsel, loader .mjs-filerne til databehandling og sender EJS-skabeloner til browseren.
+            Databehandlingen foregår i flere .mjs-filer, der hver har ansvar for specifikke opgaver som filtrering efter kategori, rabat eller udløbsdato. Dette setup gør koden overskuelig og let at vedligeholde. Til filtrering af dataen gør jeg brug af både array- og strengmetoder.</p>
+
+            <br>
+        <h4>Teknologivalg og hvorfor</h4>
+        <p>Node.js og Express blev valgt for deres hurtige opsætning og kompatibilitet med JavaScript både på backend og frontend. EJS gør det nemt at sende data direkte ind i HTML, og det spiller rigtig godt sammen med Chart.js, som jeg bruger til at vise graferne visuelt. JSON-filer gør det muligt at arbejde offline og gemme mellemresultater. At hver graf har fået sin egen .mjs fil, er for at jeg bedre kan holde styr på databehandlingen og nemt genbruge koden. </p>
+        <br>
+        <h4>Styrker og svagheder</h4>
+        <p>Min webapplikation har flere styrker: Den er modulopbygget, hvilket gør den overskuelig, nem at udvide og teste, især pga. lokale JSON-filer. Grafikken er flot takket være Chart.js, og koden er delt op i logik, data og visning, hvilket øger stabiliteten og gør fejlretning lettere.
+            Ulemperne er, at systemet er afhængigt af API’erne, som kan ændre sig eller være ustabile – især Salling Group API’en, der opdateres dagligt og varierer med geografisk placering. Det kunne være relevant at undersøge muligheden for dynamisk dataopdatering.
+        </p>
+    </div>
+</div>
+
+</body>
